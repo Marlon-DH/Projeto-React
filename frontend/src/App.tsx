@@ -1,12 +1,26 @@
-import "./App.css";
+import { Link, Routes, Route } from "react-router";
 
-function App(){
-  return(
-    <main className="bg-amber-50 flex items-center justify-center min-h-screen ">
-      <div className="bg-white shadow-lg rounded-xl p-8">
-      <h1 className="text-5x1 font-bold">Hello World!!!</h1>
-      <p className="mt-3 text-cyan-600 ">Bem vindo ao meu React com TailWind!!!</p>
-    </div>
+import "./App.css";
+import Home from "./pages/Home";
+import Produtos from "./pages/Produtos";
+import Contato from "./pages/Contato";
+
+
+function App() {
+  return (
+    <main className="min-h-screen  bg-amber-50">
+      <nav className="bg-blue-900 text-white p-4 flex gap-6">
+        <Link to="/" className="hover:underline">Home</Link>
+        <Link to="/produtos" className="hover:underline">Produtos</Link>
+        <Link to="/contato" className="hover:underline">Contato</Link>
+      </nav>
+      <div>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/produtos" element={<Produtos />}></Route>
+          <Route path="/contato" element={<Contato />}></Route>
+        </Routes>
+      </div>
     </main>
   );
 }
