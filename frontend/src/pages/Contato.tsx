@@ -1,4 +1,4 @@
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 
 
 type Contato = {
@@ -53,20 +53,20 @@ if(carregando) {
   }
 
   return (
-    <main>
-      <div>
+    <main className="mx-auto max-w-5xl p-6">
+      <div className="mb-6 text-4xl font-bold text-blue-900">
         <h1>Lista de Contatos</h1>
       </div>
 
-      <div>
-          {contatos.length === 0 ? (
-            <p>Nenhum contato encontrado.</p>
-          ) : (
-              contatos.map((contato) => (
-                <div key={contato.id}>
-                  <h2 className="text-xl font-bold">{contato.nome}</h2>
-                  <p className="text-gray-600">{contato.email}</p>
-                </div>
+      <div className="mt-8 space-y-4">
+        {contatos.length === 0 ? (
+          <p className="text-gray-500">Nenhum contato encontrado.</p>
+        ) : (
+          contatos.map((contato) => (
+            <div key={contato.id} className="rounded border p-4">
+              <h2 className="text-xl font-bold">{contato.nome}</h2>
+              <p className="text-gray-600">{contato.email}</p>
+            </div>
           )))}
       </div>
     </main>
