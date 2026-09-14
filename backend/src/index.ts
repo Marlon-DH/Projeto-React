@@ -4,10 +4,29 @@ import dotenv from "dotenv"
 dotenv.config()
 import morgan from 'morgan';
 import helmet from "helmet";
+import { Pool } from "pg";
+
 
 const app: Express = express();
 app.use(cors());
 const port = process.env.PORT ;
+
+export const pool = new Pool({
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+})
+
+async function testarBanco() {
+  try {
+    const result = await pool.query('SELECT * FROM contatos')
+    console.log("BD conectado", result.rows)
+  } catch (error) {
+    console.error('Erro ao conectar com o bd', error)
+  }
+}
 
 //Aceitar JSON no corpo da requisição
 app.use(express.json());
@@ -29,8 +48,15 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 //GET: Requisição para buscar contatos
-app.get("/api/contatos", (req: Request, res: Response) => {
-  res.json(contatos);
+app.get("/api/contatos", async (req: Request, res: Response) => {
+  try {
+    const result = await pool.query(prisma.contato.findMany())
+    res.json(result.rows)
+  } catch (error) {
+    console.error('Erro ao conectar com o bd', error)
+    res.status(500).json({error: "Erro interno no servidor"
+    })
+  }
 });
 
 //POST: Requisição para adicionar um novo contato
@@ -96,4 +122,5 @@ app.delete("/api/contatos/:id", (req: Request, res: Response) => {
 
 app.listen(port, () => {
   console.log(`Servidor iniciado em: http://localhost:${port}`);
+  testarBanco();
 });
