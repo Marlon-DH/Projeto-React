@@ -9,24 +9,7 @@ import { prisma } from "./lib/prisma.js";
 
 const app: Express = express();
 
-const allowedFrontends = (process.env.FRONTEND_URL || "http://localhost:5173")
-  .split(",")
-  .map((s) => s.trim());
-
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin) {
-        // requests like Postman or server-to-server (no origin) should be allowed
-        return callback(null, true);
-      }
-      if (allowedFrontends.includes(origin)) {
-        return callback(null, true);
-      }
-      return callback(new Error(`CORS policy: origin ${origin} not allowed`));
-    },
-  }),
-);
+app.use(cors({ origin: true}));
 
 app.use(express.json());
 
