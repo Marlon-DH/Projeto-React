@@ -9,6 +9,7 @@ type Contato = {
 const API_URL =
   import.meta.env.VITE_API_URL || "http://localhost:3000/api/contatos";
 
+  
 export default function Contatos() {
   const [contatos, setContatos] = useState<Contato[]>([]);
   const [erro, setErro] = useState("");
@@ -22,9 +23,7 @@ export default function Contatos() {
 
   async function buscarContatos() {
     try {
-      const resposta = await fetch(API_URL, {
-        mode: "cors",
-      });
+      const resposta = await fetch(API_URL);
 
       if (!resposta.ok) {
         throw new Error("Erro ao buscar contato");
