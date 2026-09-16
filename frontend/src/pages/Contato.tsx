@@ -22,7 +22,9 @@ export default function Contatos() {
 
   async function buscarContatos() {
     try {
-      const resposta = await fetch(API_URL);
+      const resposta = await fetch(API_URL, {
+        mode: "cors",
+      });
 
       if (!resposta.ok) {
         throw new Error("Erro ao buscar contato");
